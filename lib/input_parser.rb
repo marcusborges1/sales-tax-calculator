@@ -31,10 +31,15 @@ class InputParser
     #
     # @param line [String] input line in format "quantity name at price"
     # @return [LineItem] the parsed line item
+    # @raise [ArgumentError] if line does not match expected format
     # @example
     #   InputParser.parse_line("1 imported box fo chocolates at 10.00")
     def self.parse_line(line)
         match = line.match(/^(\d+)\s+(.+)\s+at\s+([\d.]+)$/)
+
+        if match == nil
+            raise ArgumentError, "expected format 'quantity name at price', got line '#{line}' instead"
+        end
 
         quantity = match[1].to_i
         name = match[2]

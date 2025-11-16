@@ -8,7 +8,7 @@ RSpec.describe InputParser do
         let(:temp_file) { Tempfile.new(['test_input', '.txt']) }
         after { temp_file.unlink }
 
-        it 'returns a list with multiplee line items' do
+        it 'returns a list with multiple line items' do
             content = <<~INPUT
                 2 book at 12.49
                 1 music CD at 14.99
@@ -61,12 +61,16 @@ RSpec.describe InputParser do
         end
 
         it 'returns empty list for empty file' do
-          temp_file.write('')
-          temp_file.rewind
+            temp_file.write('')
+            temp_file.rewind
 
-          line_items = InputParser.parse_file(temp_file.path)
+            line_items = InputParser.parse_file(temp_file.path)
 
             expect(line_items).to be_empty
+        end
+
+        it 'raises an Errno::ENOENT error when file does not exist' do
+            expect { InputParser.parse_file('non-existent-path') }.to raise_error { Errno::ENOENT }
         end
     end
 
@@ -91,6 +95,12 @@ RSpec.describe InputParser do
             expect(item.unit_price).to eq(BigDecimal('47.50'))
             expect(item.category).to eq(:other)
             expect(item.imported).to be(true)
+        end
+
+        it 'raises an ArgumentError when line is not on expected pattern' do
+            line = "anything outside of our expected pattern"
+
+            expect { InputParser.parse_line(line) }.to raise_error(ArgumentError)
         end
     end
 
