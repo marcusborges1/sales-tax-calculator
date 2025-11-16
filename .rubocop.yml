@@ -32,3 +32,7 @@ RSpec/ContextWording:
 
 RSpec/RepeatedExample:
   Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/end_to_end_spec.rb'
