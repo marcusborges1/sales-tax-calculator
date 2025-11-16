@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bigdecimal'
 
 class LineItem
@@ -22,7 +24,7 @@ class LineItem
   #
   # @return [boolean] true if the item is a book, food or medical product
   def tax_exempt?
-    [:book, :food, :medical].include?(@category)
+    %i[book food medical].include?(@category)
   end
 
   # Returns whether the item is imported.

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This ensures this codebase will only use gems specificed on Gemfile
 # on specified versions.
 require 'bundler/setup'
@@ -11,5 +13,5 @@ filename = ARGV[0] || 'fixtures/basic_items.txt'
 # Temporarily showing only parsing
 items = InputParser.parse_file(filename)
 items.each do |item|
-  puts "#{item.quantity} #{item.name} - #{'%.2f' % item.unit_price}"
+  puts format('%<quantity>d %<name>s - %<price>.2f', quantity: item.quantity, name: item.name, price: item.unit_price)
 end

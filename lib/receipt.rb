@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Receipt
   # These values were defined on challenge specification, that can be found
   # on: https://gist.github.com/safplatform/792314da6b54346594432f30d5868f36
-  BASIC_SALES_TAX = BigDecimal("0.10")
-  IMPORT_DUTY = BigDecimal("0.05")
+  BASIC_SALES_TAX = BigDecimal('0.10')
+  IMPORT_DUTY = BigDecimal('0.05')
 
   def initialize(line_items)
     @line_items = line_items
@@ -17,8 +19,8 @@ class Receipt
   #
   # @return [void]
   def evaluate
-    sales_taxes = BigDecimal("0")
-    total = BigDecimal("0")
+    sales_taxes = BigDecimal('0')
+    total = BigDecimal('0')
 
     @line_items.each do |item|
       tax = calculate_tax(item)
@@ -27,11 +29,11 @@ class Receipt
       sales_taxes += tax
       total += price_with_tax
 
-      puts "#{item.quantity} #{item.name}: #{'%.2f' % price_with_tax}"
+      puts format('%<quantity>d %<name>s: %<price>.2f', quantity: item.quantity, name: item.name, price: price_with_tax)
     end
 
-    puts "Sales Taxes: #{'%.2f' % sales_taxes}"
-    puts "Total: #{'%.2f' % total}"
+    puts format('Sales Taxes: %<taxes>.2f', taxes: sales_taxes)
+    puts format('Total: %<total>.2f', total: total)
   end
 
   private
@@ -41,7 +43,7 @@ class Receipt
   # @param item [LineItem] the line item to calculate
   # @return [BigDecimal] the rounded tax amount
   def calculate_tax(item)
-    tax_per_unit = BigDecimal("0")
+    tax_per_unit = BigDecimal('0')
     tax_per_unit += item.unit_price * BASIC_SALES_TAX unless item.tax_exempt?
     tax_per_unit += item.unit_price * IMPORT_DUTY if item.imported?
 
@@ -56,7 +58,7 @@ class Receipt
   # @param amount [BigDecimal] the tax amount to round
   # @return [BigDecimal] the rounded amount
   def round_up(amount)
-    nearest_amount = BigDecimal("0.05")
+    nearest_amount = BigDecimal('0.05')
     (amount / nearest_amount).ceil * nearest_amount
   end
 end
