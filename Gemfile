@@ -2,6 +2,8 @@
 
 source 'https://rubygems.org'
 
+ruby '3.4.7'
+
 group :development, :test do
   gem 'pry', '~> 0.14'
   gem 'pry-byebug', '~> 3.11'
