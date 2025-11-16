@@ -1,3 +1,7 @@
+# This ensures this codebase will only use gems specificed on Gemfile
+# on specified versions.
+require 'bundler/setup'
+
 require_relative 'lib/input_parser'
 
 # Accepts filename as argument of default to 'fixtures/basic_items.txt'
