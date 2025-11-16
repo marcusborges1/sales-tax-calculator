@@ -22,7 +22,7 @@ jobs:
         bundler-cache: true
 
     - name: Run RuboCop (Lint)
-      run: rake rubocop
+      run: bundle exec rake rubocop
 
     - name: Run RSpec (Tests)
-      run: rake spec
+      run: bundle exec rake spec
