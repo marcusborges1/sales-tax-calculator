@@ -5,13 +5,16 @@
 require 'bundler/setup'
 
 require_relative 'lib/input_parser'
+require_relative 'lib/receipt'
 
 # Accepts filename as argument of default to 'fixtures/basic_items.txt'
 # Example: ruby main.rb fixtures/imported_items.txt
 filename = ARGV[0] || 'fixtures/basic_items.txt'
 
-# Temporarily showing only parsing
-items = InputParser.parse_file(filename)
-items.each do |item|
-  puts format('%<quantity>d %<name>s - %<price>.2f', quantity: item.quantity, name: item.name, price: item.unit_price)
+begin
+  items = InputParser.parse_file(filename)
+  receipt = Receipt.new(items)
+  receipt.evaluate
+rescue StandardError => e
+  puts format('An error occured: <error>%s', error: e.message)
 end
