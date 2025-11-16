@@ -14,6 +14,8 @@ class InputParser
         name = match[2]
         price = match[3]
 
-        LineItem.new(quantity, name, price)
+        imported = name.include?("imported")
+
+        LineItem.new(quantity, name, price, imported)
     end
 end
