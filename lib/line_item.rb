@@ -7,15 +7,6 @@ require 'bigdecimal'
 # A LineItem calculates its category and import status based on its name, which is used
 # to determine tax exemptions and applicable import duties.
 #
-# @example Creating a basic line item
-#   item = LineItem.new(1, "book", "12.49")
-#   item.tax_exempt? #=> true
-#
-# @example Creating an imported item
-#   item = LineItem.new(1, "imported box of chocolate book", "12.49")
-#   item.imported? #=> true
-#   item.tax_exempt? #=> true
-#
 # @attr_reader [Integer] quantity the number of items
 # @attr_reader [String] name the product name
 # @attr_reader [BigDecimal] unit_price the price per unit
@@ -38,9 +29,6 @@ class LineItem
   # @param quantity [Integer] the number of items (must be positive)
   # @param nema [String] the product name (case-insensitive for categorization)
   # @param unit_price [String, Numeric] the price per unit
-  #
-  # @example
-  #   LineItem.new(2, "imported bottle of perfume", "27.99")
   def initialize(quantity, name, unit_price)
     @quantity = quantity
     @name = name
@@ -52,10 +40,6 @@ class LineItem
   # Returns total base price before tax.
   #
   # @return [BigDecimal] quantity * unit price
-  #
-  # @example
-  #   item = LineItem.new(2, "book", "12.49")
-  #   item.base_total_price #=> BigDecimal("24.98)
   def base_total_price
     @unit_price * @quantity
   end
@@ -63,10 +47,6 @@ class LineItem
   # Returns whether the item is exempt from sales tax.
   #
   # @return [boolean] true if the item is a book, food or medical product
-  #
-  # @example
-  #   LineItem.new(1, "book", "12.49").tax_exempt? #=> true
-  #   LineItem.new(1, "music CD", "14.99").tax_exempt? #=> false
   def tax_exempt?
     %i[book food medical].include?(@category)
   end
@@ -74,10 +54,6 @@ class LineItem
   # Returns whether the item is imported.
   #
   # @return [boolean] true if the item is imported
-  #
-  # @example
-  #   LineItem.new(1, "imported box of chocolates", "10.00").imported? #=> true
-  #   LineItem.new(1, "box of chocolates", "10.00").imported? #=> false
   def imported?
     @imported
   end

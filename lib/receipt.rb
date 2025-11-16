@@ -9,14 +9,6 @@ require_relative 'sales_tax_report'
 # - Basic sales tax
 # - Import duty
 #
-# @example Generate a receipt for basic items
-#   items = [
-#     LineItem.new(1, "book", "12.49"),
-#     LineItem.new(1, "music CD", "14.99")
-#   ]
-#   receipt = Receipt.new(items)
-#   receipt.evaluate
-#
 # @see LineItem
 # @see https://gist.github.com/safplatform/792314da6b54346594432f30d5868f36 Challenge specification
 class Receipt
@@ -28,13 +20,6 @@ class Receipt
   # Creates a new receipt for the given line items.
   #
   # @param line_items [Array<LineItem>] the items to include in the receipt
-  #
-  # @example
-  #   items = [
-  #     LineItem.new(2, "book", "12.49"),
-  #     LineItem.new(1, "music CD", "14.99")
-  #   ]
-  #   receipt = Receipt.new(items)
   def initialize(line_items)
     @line_items = line_items.freeze
   end
@@ -70,10 +55,6 @@ class Receipt
   # @param item [LineItem] the line item to calculate tax for
   # @return [BigDecimal] the total tax amount (rounded, multiplied by quantity)
   #
-  # @example Tax-exempt, non-imported item (no tax)
-  #   item = LineItem.new(1, "book", "12.49")
-  #   calculate_tax(item) #=> BigDecimal("0.00")
-  #
   # @api private
   def calculate_tax(item)
     tax_per_unit = BigDecimal('0')
@@ -90,12 +71,6 @@ class Receipt
   #
   # @param amount [BigDecimal] the tax amount to round
   # @return [BigDecimal] the amount rounded up to nearest 0.05
-  #
-  # @example Round up various amounts
-  #   round_up(BigDecimal("1.499")) #=> BigDecimal("1.50")
-  #   round_up(BigDecimal("1.50"))  #=> BigDecimal("1.50")
-  #   round_up(BigDecimal("1.51"))  #=> BigDecimal("1.55")
-  #   round_up(BigDecimal("0.00"))  #=> BigDecimal("0.00")
   #
   # @see https://gist.github.com/safplatform/792314da6b54346594432f30d5868f36 Challenge specification
   # @api private
