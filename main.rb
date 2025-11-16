@@ -14,7 +14,8 @@ filename = ARGV[0] || 'fixtures/basic_items.txt'
 begin
   items = InputParser.parse_file(filename)
   receipt = Receipt.new(items)
-  receipt.evaluate
+  report = receipt.evaluate
+  report.print
 rescue StandardError => e
   puts format('An error occured: <error>%s', error: e.message)
 end

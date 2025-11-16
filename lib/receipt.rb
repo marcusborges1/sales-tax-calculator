@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'bigdecimal'
+require_relative 'sales_tax_report'
+
 # Calculates sales tax receipts for line items.
 #
 # Receipt calculates sales taxes based on two types of taxes:
@@ -33,26 +36,18 @@ class Receipt
   #   ]
   #   receipt = Receipt.new(items)
   def initialize(line_items)
-    @line_items = line_items
+    @line_items = line_items.freeze
   end
 
-  # Prints a formatted sales tax receipt to stdout.
+  # Calculates sales tax and totals for all line items.
   #
-  # The receipt includes:
-  # - Each item with quantity, name, and total price including tax
-  # - Total sales taxes collected
-  # - Grand total of all items with tax
+  # Processes each line item to calculate applicable taxes, then constructs and
+  # returns a SalesTaxReport containing the items with taxes applied, total sales
+  # taxes, and grand total.
   #
-  # @return [void]
-  #
-  # @example Output format
-  #   receipt.evaluate
-  #   # 1 book: 12.49
-  #   # 1 music CD: 16.49
-  #   # 1 imported box of chocolates: 10.50
-  #   # Sales Taxes: 2.00
-  #   # Total: 39.48
+  # @return [SalesTaxReport] a report object containing items, sales taxes, and total
   def evaluate
+    items = []
     sales_taxes = BigDecimal('0')
     total = BigDecimal('0')
 
@@ -63,11 +58,9 @@ class Receipt
       sales_taxes += tax
       total += price_with_tax
 
-      puts format('%<quantity>d %<name>s: %<price>.2f', quantity: item.quantity, name: item.name, price: price_with_tax)
+      items << { quantity: item.quantity, name: item.name, price_with_tax: price_with_tax }
     end
-
-    puts format('Sales Taxes: %<taxes>.2f', taxes: sales_taxes)
-    puts format('Total: %<total>.2f', total: total)
+    SalesTaxReport.new(items, sales_taxes, total)
   end
 
   private
