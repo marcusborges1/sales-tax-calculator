@@ -8,9 +8,9 @@ RSpec.describe Receipt do
     context 'basic items' do
       it 'prints taxes report to stdout' do
         line_items = [
-          LineItem.new(2, 'book', '12.49', :book, false),
-          LineItem.new(1, 'music CD', '14.99', :other, false),
-          LineItem.new(1, 'chocolate bar', '0.85', :food, false)
+          LineItem.new(2, 'book', '12.49'),
+          LineItem.new(1, 'music CD', '14.99'),
+          LineItem.new(1, 'chocolate bar', '0.85')
         ]
         receipt = described_class.new(line_items)
 
@@ -29,8 +29,8 @@ RSpec.describe Receipt do
     context 'imported items' do
       it 'prints taxes report to stdout' do
         line_items = [
-          LineItem.new(1, 'imported box of chocolates', '10.00', :food, true),
-          LineItem.new(1, 'imported bottle of perfume', '47.50', :other, true)
+          LineItem.new(1, 'imported box of chocolates', '10.00'),
+          LineItem.new(1, 'imported bottle of perfume', '47.50')
         ]
         receipt = described_class.new(line_items)
 
@@ -48,10 +48,10 @@ RSpec.describe Receipt do
     context 'mixed items' do
       it 'prints taxes report to stdout' do
         line_items = [
-          LineItem.new(1, 'imported bottle of perfume', '27.99', :other, true),
-          LineItem.new(1, 'bottle of perfume', '18.99', :other, false),
-          LineItem.new(1, 'packet of headache pills', '9.75', :medical, false),
-          LineItem.new(3, 'imported boxes of chocolates', '11.25', :food, true)
+          LineItem.new(1, 'imported bottle of perfume', '27.99'),
+          LineItem.new(1, 'bottle of perfume', '18.99'),
+          LineItem.new(1, 'packet of headache pills', '9.75'),
+          LineItem.new(3, 'imported boxes of chocolates', '11.25')
         ]
         receipt = described_class.new(line_items)
 
