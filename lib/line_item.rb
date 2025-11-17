@@ -30,9 +30,15 @@ class LineItem
   # @param nema [String] the product name (case-insensitive for categorization)
   # @param unit_price [String, Numeric] the price per unit
   def initialize(quantity, name, unit_price)
+    raise ArgumentError, 'quantity must be positive' unless quantity.positive?
+    raise ArgumentError, 'name cannot be empty' if name.strip.empty?
+
     @quantity = quantity
     @name = name
     @unit_price = BigDecimal(unit_price)
+
+    raise ArgumentError, 'unit_price must be positive' unless @unit_price.positive?
+
     @category = determine_category
     @imported = @name.include?('imported')
   end
