@@ -6,11 +6,11 @@
 # that includes itemized products with their prices including tax,
 # the total sales taxes applied, and the total amount.
 #
-# @attr_accessor [Array<Hash>] items the list of items with quantity, name, and price_with_tax
-# @attr_accessor [Float] sales_taxes the total sales taxes applied to all items
-# @attr_accessor [Float] total the total including all items and taxes
+# @attr_reader [Array<Hash>] items the list of items with quantity, name, and price_with_tax
+# @attr_reader [Float] sales_taxes the total sales taxes applied to all items
+# @attr_reader [Float] total the total including all items and taxes
 class SalesTaxReport
-  attr_accessor :items, :sales_taxes, :total
+  attr_reader :items, :sales_taxes, :total
 
   # Initializes a new SalesTaxReport instance.
   #
