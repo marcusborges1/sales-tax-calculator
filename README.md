@@ -39,7 +39,10 @@ The tax calculation rules are the following:
     - The obvious limitation here, is that we can only calculate properly the taxes of products whose words we already know up-front.
 - One last limitation is that we only calculate sales taxes for inputs that are completly valid. Otherwise, the program will give feedback indicating the occured error and finishing its execution.
 
-### Project organization
+### Project structure
+
+Project structure is as simple as our challenge requires it to be.
+
 - **main.rb**: Entry point for the application.
 - **lib/**: Core business logic classes.
 - **spec/**: Rspec test suite with unit, integration, and end-to-end tests.
@@ -57,6 +60,8 @@ This application follows object-oriented design with clear separation of concern
 - **SalesTaxReport**: Formats and displays the final receipt
 
 ### Design and stack decisions
+
+Decisions to make the project viable.
 
 - **Composition over inheritance**: Receipt composes TaxCalculator for extensibility.
 - **Immutability and thread safety**: Objects use `freeze` and `attr_reader` for thread safety. Also there is no shared mutable state.
