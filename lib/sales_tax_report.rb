@@ -21,7 +21,7 @@ class SalesTaxReport
   #
   # @return [SalesTaxReport] a new instance of SalesTaxReport
   def initialize(items, sales_taxes, total)
-    @items = items
+    @items = items.freeze
     @sales_taxes = sales_taxes
     @total = total
   end
