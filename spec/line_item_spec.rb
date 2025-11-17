@@ -32,51 +32,49 @@ RSpec.describe LineItem do
       expect(item.imported).to be(true)
     end
 
-    context 'when validating inputs' do
-      describe 'quantity validation' do
-        it 'raises ArgumentError when quantity is zero' do
-          expect { described_class.new(0, 'book', '12.49') }
-            .to raise_error(ArgumentError, 'quantity must be positive')
-        end
-
-        it 'raises ArgumentError when quantity is negative' do
-          expect { described_class.new(-1, 'book', '12.49') }
-            .to raise_error(ArgumentError, 'quantity must be positive')
-        end
+    describe 'quantity validation' do
+      it 'raises ArgumentError when quantity is zero' do
+        expect { described_class.new(0, 'book', '12.49') }
+          .to raise_error(ArgumentError, 'quantity must be positive')
       end
 
-      describe 'name validation' do
-        it 'raises ArgumentError when name is empty' do
-          expect { described_class.new(1, '', '12.49') }
-            .to raise_error(ArgumentError, 'name cannot be empty')
-        end
+      it 'raises ArgumentError when quantity is negative' do
+        expect { described_class.new(-1, 'book', '12.49') }
+          .to raise_error(ArgumentError, 'quantity must be positive')
+      end
+    end
 
-        it 'raises ArgumentError when name is only whitespace' do
-          expect { described_class.new(1, '   ', '12.49') }
-            .to raise_error(ArgumentError, 'name cannot be empty')
-        end
-
-        it 'raises ArgumentError when name is only tabs' do
-          expect { described_class.new(1, "\t\t", '12.49') }
-            .to raise_error(ArgumentError, 'name cannot be empty')
-        end
+    describe 'name validation' do
+      it 'raises ArgumentError when name is empty' do
+        expect { described_class.new(1, '', '12.49') }
+          .to raise_error(ArgumentError, 'name cannot be empty')
       end
 
-      describe 'unit_price validation' do
-        it 'raises ArgumentError when unit_price is zero' do
-          expect { described_class.new(1, 'book', '0') }
-            .to raise_error(ArgumentError, 'unit_price must be positive')
-        end
+      it 'raises ArgumentError when name is only whitespace' do
+        expect { described_class.new(1, '   ', '12.49') }
+          .to raise_error(ArgumentError, 'name cannot be empty')
+      end
 
-        it 'raises ArgumentError when unit_price is negative' do
-          expect { described_class.new(1, 'book', '-5.00') }
-            .to raise_error(ArgumentError, 'unit_price must be positive')
-        end
+      it 'raises ArgumentError when name is only tabs' do
+        expect { described_class.new(1, "\t\t", '12.49') }
+          .to raise_error(ArgumentError, 'name cannot be empty')
+      end
+    end
 
-        it 'raises ArgumentError when unit_price is negative number' do
-          expect { described_class.new(1, 'book', -10) }
-            .to raise_error(ArgumentError, 'unit_price must be positive')
-        end
+    describe 'unit_price validation' do
+      it 'raises ArgumentError when unit_price is zero' do
+        expect { described_class.new(1, 'book', '0') }
+          .to raise_error(ArgumentError, 'unit_price must be positive')
+      end
+
+      it 'raises ArgumentError when unit_price is negative' do
+        expect { described_class.new(1, 'book', '-5.00') }
+          .to raise_error(ArgumentError, 'unit_price must be positive')
+      end
+
+      it 'raises ArgumentError when unit_price is negative number' do
+        expect { described_class.new(1, 'book', -10) }
+          .to raise_error(ArgumentError, 'unit_price must be positive')
       end
     end
   end
