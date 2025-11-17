@@ -11,7 +11,7 @@ require 'bigdecimal'
 # @attr_reader [String] name the product name
 # @attr_reader [BigDecimal] unit_price the price per unit
 # @attr_reader [Symbol] category the product category (:book, :food, :medical or :other)
-# @attr_reader [Boolean] imported wheter the product is imported
+# @attr_reader [Boolean] imported whether the product is imported
 class LineItem
   attr_reader :quantity, :name, :unit_price, :category, :imported
 
@@ -27,7 +27,7 @@ class LineItem
   # The category and import status are automatically determined based on the name.
   #
   # @param quantity [Integer] the number of items (must be positive)
-  # @param nema [String] the product name (case-insensitive for categorization)
+  # @param name [String] the product name (case-insensitive for categorization)
   # @param unit_price [String, Numeric] the price per unit
   def initialize(quantity, name, unit_price)
     raise ArgumentError, 'quantity must be positive' unless quantity.positive?
