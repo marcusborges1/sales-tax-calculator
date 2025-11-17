@@ -11,11 +11,28 @@ require_relative 'lib/receipt'
 # Example: ruby main.rb fixtures/imported_items.txt
 filename = ARGV[0] || 'fixtures/basic_items.txt'
 
+unless File.exist?(filename)
+  puts "Error: File '#{filename}' does not exist."
+  exit 1
+end
+
+if File.empty?(filename)
+  puts "Error: File '#{filename}' is empty."
+  exit 1
+end
+
 begin
   items = InputParser.parse_file(filename)
   receipt = Receipt.new(items)
   report = receipt.evaluate
   report.print
+rescue Errno::ENOENT => e
+  puts "Error: Could not find file - #{e.message}"
+  exit 1
+rescue ArgumentError => e
+  puts "Error: Invalid input format - #{e.message}"
+  exit 1
 rescue StandardError => e
-  puts format('An error occured: <error>%s', error: e.message)
+  puts "Error: An unexpected error occurred - #{e.message}"
+  exit 1
 end

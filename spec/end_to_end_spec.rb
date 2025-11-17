@@ -84,9 +84,9 @@ RSpec.describe 'End-to-end Test' do
       it 'handles error gracefully' do
         stdout, stderr, status = Open3.capture3("ruby #{main_script} nonexistent.txt")
 
-        expect(status.success?).to be(true)
+        expect(status.success?).to be(false)
         expect(stderr).to be_empty
-        expect(stdout).to include('An error occured')
+        expect(stdout).to include('Error: File')
       end
     end
 
@@ -104,9 +104,9 @@ RSpec.describe 'End-to-end Test' do
       it 'handles parsing errors gracefully' do
         stdout, stderr, status = Open3.capture3("ruby #{main_script} #{temp_file}")
 
-        expect(status.success?).to be(true)
+        expect(status.success?).to be(false)
         expect(stderr).to be_empty
-        expect(stdout).to include('An error occured')
+        expect(stdout).to include('Error: Invalid input format')
       end
     end
   end

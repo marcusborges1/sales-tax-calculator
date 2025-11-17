@@ -72,6 +72,26 @@ RSpec.describe InputParser do
       expect(line_items).to be_empty
     end
 
+    it 'handles files with empty lines gracefully' do
+      content = <<~INPUT
+        2 book at 12.49
+
+        1 music CD at 14.99
+
+        1 chocolate bar at 0.85
+      INPUT
+
+      temp_file.write(content)
+      temp_file.rewind
+
+      line_items = described_class.parse_file(temp_file.path)
+
+      expect(line_items.length).to eq(3)
+      expect(line_items[0].name).to eq('book')
+      expect(line_items[1].name).to eq('music CD')
+      expect(line_items[2].name).to eq('chocolate bar')
+    end
+
     it 'raises an Errno::ENOENT error when file does not exist' do
       expect { described_class.parse_file('non-existent-path') }.to(raise_error { Errno::ENOENT })
     end
