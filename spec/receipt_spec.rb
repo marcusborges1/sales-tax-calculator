@@ -5,7 +5,7 @@ require_relative '../lib/receipt'
 require_relative '../lib/line_item'
 
 RSpec.describe Receipt do
-  describe '#evaluate' do
+  describe '#evaluate_report' do
     context 'basic items' do
       it 'returns a SalesTaxReport with correct calculations' do
         line_items = [
@@ -14,7 +14,7 @@ RSpec.describe Receipt do
           LineItem.new(1, 'chocolate bar', '0.85')
         ]
         receipt = described_class.new(line_items)
-        report = receipt.evaluate
+        report = receipt.evaluate_report
 
         expect(report).to be_a(SalesTaxReport)
         expect(report.items).to eq([
@@ -34,7 +34,7 @@ RSpec.describe Receipt do
           LineItem.new(1, 'imported bottle of perfume', '47.50')
         ]
         receipt = described_class.new(line_items)
-        report = receipt.evaluate
+        report = receipt.evaluate_report
 
         expect(report).to be_a(SalesTaxReport)
         expect(report.items).to eq([
@@ -57,7 +57,7 @@ RSpec.describe Receipt do
           LineItem.new(3, 'imported boxes of chocolates', '11.25')
         ]
         receipt = described_class.new(line_items)
-        report = receipt.evaluate
+        report = receipt.evaluate_report
 
         expect(report).to be_a(SalesTaxReport)
         expect(report.items).to eq([

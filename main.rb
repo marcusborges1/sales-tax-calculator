@@ -24,7 +24,7 @@ end
 begin
   items = InputParser.parse_file(filename)
   receipt = Receipt.new(items)
-  report = receipt.evaluate
+  report = receipt.evaluate_report
   report.print
 rescue Errno::ENOENT => e
   puts "Error: Could not find file - #{e.message}"
